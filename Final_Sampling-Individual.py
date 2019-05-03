@@ -12,7 +12,7 @@
 # In[8]:
 
 
-get_ipython().run_line_magic('pdb', '')
+# get_ipython().run_line_magic('pdb', '')
 
 
 # In[9]:
@@ -174,7 +174,7 @@ class Volumetric(Sampling):
 
 kdd_data_b =  pd.read_csv("./Dataset/bio_train.dat",delimiter='\t',header=None)
 kdd_data_b = np.array(kdd_data_b)
-chota = 25000 # full ke liye -1
+chota = 5000 # full ke liye -1
 kdd_data = kdd_data_b[:chota,3:]
 print(kdd_data.shape)
 
@@ -219,8 +219,8 @@ def get_costs(sampler,
 
 params = {
   'kdd_data': kdd_data,
-  'n_cluster' : 5,
-  'max_itern' : tuple(i for i in range(1, 21)),
+  'n_cluster' : 15,
+  'max_itern' : tuple(i for i in range(1, 10)),
   'tolerance' : 1e-20,
   'seeds' : (2, 4, 63),
   'percents' : (2, 5, 8, 10),
@@ -231,8 +231,8 @@ params = {
 
 
 kdd_data = kdd_data
-n_cluster = 5
-max_itern =  tuple(i for i in range(1, 21))
+n_cluster = 15
+max_itern =  tuple(i for i in range(1, 10))
 tolerance = 1e-20
 seeds = (2, 4, 63)
 percents = (2, 5, 8, 10)

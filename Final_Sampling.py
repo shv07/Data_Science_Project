@@ -93,47 +93,68 @@ class Lev(Sampling):
     return data[ix]
 
 class Corsets(Sampling):
-  def sampling(self, data, percent = 40, seed = 1, debug=False):
-    size = percent
-    size = size/100
-    coreset = []
-    m = int(size*len(data))
-    if debug: print("Sampling using lightweight coresets....")
-    if debug: print("---Finding the mean of the data (Feature-wise)---")
-    mean = []
-    total_number = 0
-    mean = np.mean(data, axis = 0)
-    total_number = len(data)
+  # def sampling(self, data, percent = 40, seed = 1, debug=False):
+  #   size = percent
+  #   size = size/100
+  #   coreset = []
+  #   m = int(size*len(data))
+  #   if debug: print("Sampling using lightweight coresets....")
+  #   if debug: print("---Finding the mean of the data (Feature-wise)---")
+  #   mean = []
+  #   total_number = 0
+  #   mean = np.mean(data, axis = 0)
+  #   total_number = len(data)
 
-    if debug: print("---Finding differences squared sum between the mean and data values---")
-    distances_sum = np.zeros(len(data[0]))
-    distances = []
+  #   if debug: print("---Finding differences squared sum between the mean and data values---")
+  #   distances_sum = np.zeros(len(data[0]))
+  #   distances = []
 
-    for datapoint in data:  
-        temp_distance = 0.0 
-        for i in range(len(datapoint)):
-            distances_sum[i] += abs(mean[i]-datapoint[i])
-            temp_distance += abs(mean[i]-datapoint[i])
-            distances.append((np.sum(np.abs(datapoint-mean)))**2)
-        total_distance = np.sum(distances)
+  #   for datapoint in data:  
+  #       temp_distance = 0.0 
+  #       for i in range(len(datapoint)):
+  #           distances_sum[i] += abs(mean[i]-datapoint[i])
+  #           temp_distance += abs(mean[i]-datapoint[i])
+  #           distances.append((np.sum(np.abs(datapoint-mean)))**2)
+  #       total_distance = np.sum(distances)
 
-    if debug: print("---Creating q(x) probability array---")
-    q = []
-    uniform_distribution = 0.5*(1/total_number)
-    for i in range(len(data)):
-        q.append(uniform_distribution+0.5*(distances[i]/total_distance))
+  #   if debug: print("---Creating q(x) probability array---")
+  #   q = []
+  #   uniform_distribution = 0.5*(1/total_number)
+  #   for i in range(len(data)):
+  #       q.append(uniform_distribution+0.5*(distances[i]/total_distance))
 
-    if debug: print("---Sampling",int(size*len(data)),"points to be used in lightweight coreset")
-    for i in range(len(q)):
-        weight = 1.0/(m*q[i])
-        q[i] = weight
-    if int(m) >= total_number:
-        coreset = np.array(range(len(data)))
-    else:
-        coreset = np.random.choice(np.array(list(range(len(data)))), m, p = q/sum(q))
-    if debug: print("Coreset creation complete.\n")
-    return data[coreset]
+  #   if debug: print("---Sampling",int(size*len(data)),"points to be used in lightweight coreset")
+  #   for i in range(len(q)):
+  #       weight = 1.0/(m*q[i])
+  #       q[i] = weight
+  #   if int(m) >= total_number:
+  #       coreset = np.array(range(len(data)))
+  #   else:
+  #       coreset = np.random.choice(np.array(list(range(len(data)))), m, p = q/sum(q))
+  #   if debug: print("Coreset creation complete.\n")
+  #   return data[coreset]
 
+  def sampling(self, data, percent, seed):
+    '''m is number of samples'''
+    np.random.seed(seed)
+    mean = np.mean(data, axis=0)
+    assert(mean.shape[0] == data.shape[1])
+
+    n = data.shape[0]
+    q = np.zeros(n)
+    cons = 1/(2*n)
+    mult = 1/2
+    deno = np.sum(np.linalg.norm(data - mean, axis=1)**2)
+
+    num = np.linalg.norm(data - mean, axis=1)**2
+
+    q = cons + mult*num/deno
+    # print(q.sum())
+
+    num_of_samples = int(n * percent / 100)
+    ix = np.random.choice(np.arange(n), num_of_samples, p=q)
+
+    return data[ix]
 
 class Rand(Sampling):
   def sampling(self, data, percent = 1, seed=5):    #n x d 
@@ -174,7 +195,7 @@ class Volumetric(Sampling):
 
 kdd_data_b =  pd.read_csv("./Dataset/bio_train.dat",delimiter='\t',header=None)
 kdd_data_b = np.array(kdd_data_b)
-chota = -1 # full ke liye -1
+chota = 5000 # full ke liye -1
 kdd_data = kdd_data_b[:chota,3:]
 print(kdd_data.shape)
 
@@ -219,10 +240,10 @@ def get_costs(sampler,
 
 params = {
   'kdd_data': kdd_data,
-  'n_cluster' : 5,
+  'n_cluster' : 15,
   'max_itern' : 20,
   'tolerance' : 1e-20,
-  'seeds' : (2, 4, 63, 45, 342, 5),
+  'seeds' : (2, 4, 5),
   'percents' : tuple(i for i in range(1, 11)),
 }
 
@@ -231,10 +252,10 @@ params = {
 
 
 kdd_data = kdd_data
-n_cluster = 5
+n_cluster = 15
 max_itern = 20
 tolerance = 1e-20
-seeds = (2, 4, 63, 45, 342, 5)
+seeds = (2, 4, 5)
 percents = tuple(i for i in range(1, 11))
 
 
