@@ -33,3 +33,19 @@ plt.ylabel('Cost Value')
 plt.savefig("./plots/compareCosts"+str(int(std_flag))+".pdf", dpi=300)
 plt.show()
 
+std_flag = True
+plt.figure(figsize=(20,10))
+for i, datas in zip(['red', 'grey', 'blue', 'green'], vals):
+  xdata, ydata, dydata= get_mean_std(datas)
+  if not std_flag:
+    plt.plot(xdata, ydata, color=i)
+  else: 
+    plt.errorbar(xdata, ydata, yerr = dydata, marker = '.', color = i)
+    plt.fill_between(xdata, ydata - dydata, ydata + dydata,
+                   color=i, alpha=0.2)
+
+plt.legend(('Random', 'Leverage', 'Corsets', 'Volumetric'))
+plt.xlabel('Sample %')
+plt.ylabel('Cost Value')
+plt.savefig("./plots/compareCosts"+str(int(std_flag))+".pdf", dpi=300)
+plt.show()
