@@ -11,7 +11,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import accuracy_score
 from sklearn import datasets
 from sklearn.preprocessing import normalize
-
+from sklearn.utils import shuffle
 
 # In[50]:
 
@@ -125,6 +125,9 @@ class Volumetric(Sampling):
 
 kdd_data_b =  pd.read_csv("./Dataset/bio_train.dat",delimiter='\t',header=None)
 kdd_data_b = np.array(kdd_data_b)
+kdd_data_b = shuffle(kdd_data_b)
+kdd_data_b = shuffle(kdd_data_b)
+kdd_data_b = shuffle(kdd_data_b)
 chota = 8000 # full ke liye -1
 kdd_data = kdd_data_b[:chota,3:]
 print(kdd_data.shape)
