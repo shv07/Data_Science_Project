@@ -27,7 +27,7 @@ for i, datas in zip(['red', 'grey', 'blue', 'green'], vals):
     plt.fill_between(xdata, ydata - dydata, ydata + dydata,
                    color=i, alpha=0.2)
 
-plt.legend(('Random', 'Leverage', 'Corsets', 'Volumetric'))
+plt.legend(('Uniform', 'Leverage', 'Corsets', 'Volumetric'))
 plt.xlabel('Sample %')
 plt.ylabel('Cost Value')
 plt.savefig("./plots/compareCosts"+str(int(std_flag))+".pdf", dpi=300)
@@ -44,7 +44,7 @@ for i, datas in zip(['red', 'grey', 'blue', 'green'], vals):
     plt.fill_between(xdata, ydata - dydata, ydata + dydata,
                    color=i, alpha=0.2)
 
-plt.legend(('Random', 'Leverage', 'Corsets', 'Volumetric'))
+plt.legend(('Uniform', 'Leverage', 'Corsets', 'Volumetric'))
 plt.xlabel('Sample %')
 plt.ylabel('Cost Value')
 plt.savefig("./plots/compareCosts"+str(int(std_flag))+".pdf", dpi=300)
