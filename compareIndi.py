@@ -1,30 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[7]:
-
-
 # references
 # https://las.inf.ethz.ch/files/bachem18scalable.pdf
-#
-
-
-# In[8]:
-
-
-# get_ipython().run_line_magic('pdb', '')
-
-
-# In[9]:
-
-
-# from google.colab import drive
-# drive.mount('/content/gdrive')
-# loc = "/content/gdrive/My\ Drive/IITGn\ Files/Semester\ 7/IDS/Project/ploting_files"
-
-
-# In[51]:
-
 
 import numpy as np
 np.seterr(all='warn')
