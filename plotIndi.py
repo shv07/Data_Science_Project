@@ -51,9 +51,9 @@ for file in fnames:
                        color=i, alpha=0.2)
 
     plt.legend(pers)
-    plt.title('Comparitions between different Sampling Methods')
+    plt.title('Comparison between different Sampling Methods')
     plt.xlabel('# of iterations')
     plt.ylabel('Cost Value')
-    plt.savefig("./plots/costsampleInd"+str(int(std_flag))+file+".pdf", dpi=300)
+    plt.savefig("./plots/costsampleInd"+str(int(std_flag))+file+".jpg", dpi=300)
     plt.show()
 

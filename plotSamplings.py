@@ -29,7 +29,7 @@ for i, datas in zip(['red', 'grey', 'blue', 'green'], vals):
 
 plt.legend(('Uniform', 'Leverage', 'Corsets', 'Volumetric'))
 plt.xlabel('Sample %')
-plt.title('Comparitions between different Sampling Methods')
+plt.title('Comparison between different Sampling Methods')
 plt.ylabel('Cost Value')
 plt.savefig("./plots/compareCosts"+str(int(std_flag))+".pdf", dpi=300)
 plt.show()
@@ -46,7 +46,7 @@ for i, datas in zip(['red', 'grey', 'blue', 'green'], vals):
                    color=i, alpha=0.2)
 
 plt.legend(('Uniform', 'Leverage', 'Corsets', 'Volumetric'))
-plt.title('Comparitions between different Sampling Methods with std_dev')
+plt.title('Comparison between different Sampling Methods with std_dev')
 plt.xlabel('Sample %')
 plt.ylabel('Cost Value')
 plt.savefig("./plots/compareCosts"+str(int(std_flag))+".pdf", dpi=300)
