@@ -1,4 +1,4 @@
-# Data_Science_Project
+# CS328 - Introduction to Data Science 
 Sampling Techniques for better performance of KMeans Algorithm
 We have implemented the following algorithms in a fairly successful manner:
 * Uniform Sampling
